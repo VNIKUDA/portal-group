@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <h1>{{survey.title}}</h2>
+    <form action="" method="post" id="form">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            <div class="d-flex flex-column mb-3">
+                <span class="h3">{{question.text}}</span>
+                {% for option in question.options.all %}
+                    <label for="{{option.id}}">{{option.value}}</label>
+                    
+                    
+                    {% if question.type == "single" %}
+                        <input type="radio" name="{{question.id}}" id="{{option.id}}" value="{{option.id}}" required>
+                    {% else %}
+                        <input type="checkbox" name="{{question.id}}" id="{{option.id}}" value="{{option.id}}">
+                    {% endif %}
+                {% endfor %}
+            </p>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

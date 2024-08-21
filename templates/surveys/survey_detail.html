@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{survey.title}}</h2>
+    <p>{{survey.description}}</p>
+    <a href="{% url 'surveys:survey-complete' survey.pk %}" class="btn btn-primary">Пройти опитування</a>
+</div>
+{% endblock %}

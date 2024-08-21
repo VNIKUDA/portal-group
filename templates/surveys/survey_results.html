@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{survey.title}}</h1>
+    <p>Total amount of submition: {{survey.get_users_that_completed|length}}</p>
+    <hr>
+    {% for question in questions %}
+        <p>
+            <span class="h3">{{question.text}}</span>
+            <span class="badge bg-primary">{{question.type}}</span>
+            <ul>
+                {% for option in question.options.all %}
+                    <li>{{option.value}} - {{option.get_procentage_of_chosing}}%</li>
+                {% endfor %}
+            </ul>
+        </p>
+    {% endfor %}
+</div>
+{% endblock %}
