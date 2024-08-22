@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{vote.title}}</h2>
+    <p>{{vote.description}}</p>
+    <hr>
+
+    <div>
+        <h5>{{vote.question}}</h5>
+
+        <ul class="mt-2">
+            {% for option in vote.options.all %}
+                <li>{{option.value}} - {{option.get_procentage_of_choosing}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{% url 'votes:vote-complete' vote.pk %}" class="btn btn-primary">Vote</a>
+</div>
+{% endblock %}
