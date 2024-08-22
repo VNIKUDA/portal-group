@@ -15,12 +15,17 @@ class QuestionInLine(NestedTabularInline):
     inlines = [OptionInLine]
 
 class SurveyAdmin(NestedModelAdmin):
-    list_display = ["title", "results"]
+    list_display = ["title", "complete_survey", "results"]
     inlines = [QuestionInLine]
+
+    def complete_survey(self, obj):
+        url = reverse_lazy("surveys:survey-complete", kwargs={"pk": obj.pk})
+        return format_html('<a href="{}">Complete this survey</a>', url)
+    complete_survey.short_description = "Complete links"
 
     def results(self, obj):
         url = reverse_lazy("surveys:survey-results", kwargs={"pk": obj.pk})
-        return format_html('<a href="{}">Results</a>', url)
+        return format_html('<a href="{}">See results</a>', url)
     results.short_description = 'Results'
 
 # Register your models here.

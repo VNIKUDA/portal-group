@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% block content %}
 <div class="container mt-3">
     <h1>{{survey.title}}</h2>
@@ -7,22 +8,28 @@
         {% csrf_token %}
 
         {% for question in questions %}
-            <div class="d-flex flex-column mb-3">
+            <div class="d-flex flex-column mb-3 question">
                 <span class="h3">{{question.text}}</span>
                 {% for option in question.options.all %}
                     <label for="{{option.id}}">{{option.value}}</label>
                     
-                    
                     {% if question.type == "single" %}
-                        <input type="radio" name="{{question.id}}" id="{{option.id}}" value="{{option.id}}" required>
+                        <input type="radio" name="{{question.id}}" id="{{option.id}}" value="{{option.id}}" class="single-choice" data-question-id="{{question.id}}">
                     {% else %}
-                        <input type="checkbox" name="{{question.id}}" id="{{option.id}}" value="{{option.id}}">
+                        <input type="checkbox" name="{{question.id}}" id="{{option.id}}" value="{{option.id}}" class="multiple-choice" data-question-id="{{question.id}}">
                     {% endif %}
                 {% endfor %}
-            </p>
+                
+                <!-- Warning message div, hidden by default -->
+                <div class="alert alert-warning mt-2 d-none" id="warning-{{question.id}}">
+                    <span>⚠ Please check at least one option.</span>
+                </div>
+            </div>
         {% endfor %}
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<script src="{% static 'js/survey_option_validation.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div class="container">
+    <h2>{{vote.question}}</h2>
+
+    <form action="" method="post" id="form">
+        {% csrf_token %}
+        {% for option in vote.options.all %}
+            <p>
+                <label for="{{option.id}}">{{option.value}}</label>
+                <input type="radio" name="{{vote.id}}" id="{{option.id}}" value="{{option.id}}" class="vote-option" data-question-id="{{vote.id}}">
+            </p>
+        {% endfor %}
+
+        <!-- Warning -->
+        <div class="alert alert-warning mt-2 d-none" id="warning-{{vote.id}}">
+            <span>⚠ Please check at least one option.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="{% static 'js/vote_option_validation.js' %}"></script>
+{% endblock %}
