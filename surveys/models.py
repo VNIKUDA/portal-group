@@ -43,7 +43,7 @@ class Option(models.Model):
     value = models.CharField(max_length=150)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="options")
 
-    users = models.ManyToManyField(get_user_model(), blank=True)
+    users = models.ManyToManyField(get_user_model(), blank=True, related_name="chosed_surveys_options")
 
     def get_procentage_of_chosing(self):
         try:
