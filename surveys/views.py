@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from django.urls import reverse_lazy
 from core.mixins import UserIsStaffMixin, UserHasNotCompletedMixin
 from surveys.models import Survey, Question, Option
 
 # Create your views here.
+class SurveyHomeView(TemplateView):
+    template_name = "surveys/home.html"
+
 class SurveyDetailView(DetailView):
     model = Survey
     template_name = "surveys/survey_detail.html"

@@ -4,6 +4,9 @@ from core.mixins import UserHasNotCompletedMixin
 from votes.models import Vote
 
 # Create your views here.
+class VoteHomeView(TemplateView):
+    template_name = "votes/home.html"
+
 class VoteDetailView(DetailView):
     model = Vote
     template_name = "votes/vote_detail.html"
