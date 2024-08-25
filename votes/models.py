@@ -19,7 +19,6 @@ class Vote(models.Model):
         return list(user_set)
 
     def save_submission(self, request):
-        print(request.POST)
         option = self.options.get(id=request.POST.get(str(self.id)))
         option.users.add(request.user)
 
@@ -37,4 +36,4 @@ class Option(models.Model):
         if not total_submition:
             return 0
         
-        return users / total_submition * 100
+        return round(users / total_submition * 100, 1)

@@ -7,6 +7,7 @@ from votes.models import Vote
 class VoteHomeView(TemplateView):
     template_name = "votes/home.html"
 
+
 class VoteDetailView(DetailView):
     model = Vote
     template_name = "votes/vote_detail.html"
