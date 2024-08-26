@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container" style="min-height: 88vh; margin-top: 12vh;">
+<div class="container-fluid" style="min-height: 88vh; margin-top: 12vh;">
     <div class="d-flex justify-content-center gap-5 h-100">
         <div class="card" style="width: 35%; height: fit-content; position: sticky; top: 12vh">
             <div class="card-header bg-info"></div>
-            <div class="card-body">
+            <div class="card-body rounded-0">
                 <h2 class="card-title m-0">{{vote.title}}</h2>
                 <hr class="my-1">
                 <p class="card-text">{{vote.description}}</p>

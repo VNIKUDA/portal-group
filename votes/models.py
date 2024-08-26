@@ -7,6 +7,8 @@ class Vote(models.Model):
     description = models.TextField()
     question = models.CharField(max_length=150)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.title
     
@@ -22,6 +24,9 @@ class Vote(models.Model):
         option = self.options.get(id=request.POST.get(str(self.id)))
         option.users.add(request.user)
 
+
+    class Meta:
+        ordering = ["-created_at"]
 
 class Option(models.Model):
     value = models.CharField(max_length=150)
