@@ -7,6 +7,8 @@ class Vote(models.Model):
     description = models.TextField()
     question = models.CharField(max_length=150)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.title
     
@@ -19,10 +21,12 @@ class Vote(models.Model):
         return list(user_set)
 
     def save_submission(self, request):
-        print(request.POST)
         option = self.options.get(id=request.POST.get(str(self.id)))
         option.users.add(request.user)
 
+
+    class Meta:
+        ordering = ["-created_at"]
 
 class Option(models.Model):
     value = models.CharField(max_length=150)
@@ -37,4 +41,4 @@ class Option(models.Model):
         if not total_submition:
             return 0
         
-        return users / total_submition * 100
+        return round(users / total_submition * 100, 1)
