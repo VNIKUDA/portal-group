@@ -9,6 +9,9 @@
             <div class="card-body">
                 <h2 class="card-title m-0">{{vote.title}}</h2>
                 <hr class="my-1">
+                <p class="card-subtitle text-muted d-flex justify-content-between w-100">
+                    <span>Голосів: {{vote.get_users_that_completed|length}}</span>
+                </p>
                 <p class="card-text">{{vote.description}}</p>
             </div>
         </div>

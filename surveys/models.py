@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 class Survey(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.title
@@ -28,6 +30,10 @@ class Survey(models.Model):
             for option in options:
                 option.users.add(request.user)
 
+    
+    class Meta:
+        ordering = ["-created_at"]
+
 class Question(models.Model):
     TYPE_CHOICES = (
         ("single", "Single choice"),
@@ -45,8 +51,11 @@ class Option(models.Model):
 
     users = models.ManyToManyField(get_user_model(), blank=True, related_name="chosed_surveys_options")
 
-    def get_procentage_of_chosing(self):
-        try:
-            return int(len(self.users.all()) / len(self.question.survey.get_users_that_completed()) * 100)
-        except ZeroDivisionError:
+    def get_procentage_of_choosing(self):
+        total_submition = len(self.question.survey.get_users_that_completed())
+        users = len(self.users.all())
+
+        if not total_submition:
             return 0
+        
+        return round(users / total_submition * 100, 1)

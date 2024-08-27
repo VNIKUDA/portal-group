@@ -1,8 +1,8 @@
 document.getElementById('form').addEventListener('submit', function(event) {
-    console.log("hahah")
     let multipleChoiceQuestions = document.querySelectorAll('.multiple-choice');
     let singleChoiceQuestions = document.querySelectorAll('.single-choice');
     let questionChecked = {};
+    let submissionWarning = document.getElementById("submission-warning");
 
     // Initialize an object to track which questions have at least one option checked
     multipleChoiceQuestions.forEach(function(checkbox) {
@@ -46,5 +46,9 @@ document.getElementById('form').addEventListener('submit', function(event) {
     // If not all questions are valid, prevent form submission
     if (!allValid) {
         event.preventDefault();
+        submissionWarning.classList.remove("d-none");
+    } else {
+        submissionWarning.classList.add("d-none");
     }
+
 });
