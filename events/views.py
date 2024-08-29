@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Event
+from django.views.generic import ListView, DetailView
+from events.models import Event
 
-def event_list(request):
-    events = Event.objects.all()
-    return render(request, 'events/event_list.html', {'events': events})
+class EventHomeView(ListView):
+    model = Event
+    context_object_name = "events"
+    template_name = "events/home.html"
 
-def event_detail(request, id):
-    event = get_object_or_404(Event, id=id)
-    return render(request, 'events/event_detail.html', {'event': event})
+class EventDetailView(DetailView):
+    model = Event
+    context_object_name = "event"
+    template_name = "events/event_detail.html"

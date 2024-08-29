@@ -1,26 +1,43 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Thread, Post
+from django.forms import BaseModelForm
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
+from forum.forms import ThreadForm
+from forum.models import Thread, Post
 
-def forum_home(request):
-    threads = Thread.objects.all()
-    return render(request, 'forum/forum_home.html', {'threads': threads})
+class ForumHomeView(ListView):
+    model = Thread
+    context_object_name = "threads"
+    template_name = "forum/home.html"
 
-def thread_detail(request, id):
-    thread = get_object_or_404(Thread, id=id)
-    return render(request, 'forum/thread_detail.html', {'thread': thread})
+class ThreadDetailView(DetailView):
+    model = Thread
+    context_object_name = "thread"
+    template_name = "forum/thread_detail.html"
 
-def new_thread(request):
-    if request.method == 'POST':
-        title = request.POST['title']
-        thread = Thread.objects.create(title=title, created_by=request.user)
-        return redirect('thread_detail', id=thread.id)
-    return render(request, 'forum/new_thread.html')
+class ThreadCreateView(CreateView):
+    model = Thread
+    form_class = ThreadForm
+    http_method_names = ["post"]
+    
+    def get_success_url(self):
+        return reverse_lazy("forum:thread-detail", kwargs={"pk": self.kwargs.get("pk")})
 
-def new_post(request, thread_id):
-    thread = get_object_or_404(Thread, id=thread_id)
-    if request.method == 'POST':
-        message = request.POST['message']
-        Post.objects.create(thread=thread, message=message, created_by=request.user)
-        return redirect('thread_detail', id=thread_id)
-    return render(request, 'forum/new_post.html', {'thread': thread})
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.created_by = self.request.user
 
+        return super().form_valid(form)
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = ThreadForm
+    http_method_names = ["post"]
+    
+    def get_success_url(self):
+        return reverse_lazy("forum:thread-detail", kwargs={"pk": self.kwargs.get("pk")})
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.thread = Thread.objects.get(pk=self.kwargs.get("pk"))
+        form.instance.created_by = self.request.user
+
+        return super().form_valid(form)

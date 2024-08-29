@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 from gallery.models import Image
 
-def gallery_home(request):
-    images = Image.objects.all()
-    return render(request, 'gallery/gallery_home.html', {'images': images})
+class GalleryHomeView(ListView):
+    model = Image
+    context_object_name = "images"
+    template_name = "gallery/home.html"
 
-def image_detail(request, id):
-    image = get_object_or_404(Image, id=id)
-    return render(request, 'gallery/image_detail.html', {'image': image})
+
+class ImageDetailView(DetailView):
+    model = Image
+    context_object_name = "images"
+    template_name = "gallery/image_detail.html"
