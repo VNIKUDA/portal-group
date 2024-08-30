@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_not_required
 from django.contrib.auth import views as auth_views
 from django.forms import BaseModelForm
 from django.http import HttpResponse
@@ -9,11 +11,13 @@ from account.models import Profile
 
 User = get_user_model()
 
+@method_decorator(login_not_required, name="dispatch")
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
     template_name = "account/login.html"
 
 
+@method_decorator(login_not_required, name="dispatch")
 class SignUpView(CreateView):
     model = User
     form_class = SignUpForm
@@ -38,8 +42,19 @@ class ProfileView(DetailView):
         user = get_user_model().objects.get(username=username)
 
         return Profile.objects.get(user=user)
-    
+
+
 class ProfileUpdate(UpdateView):
     model = Profile
-    context_object_name = ""
+    fields = ["avatar", "bio"]
+    context_object_name = "profile"
     template_name = "account/profile_edit.html"
+
+    def get_object(self):
+        username = self.kwargs.get("username")
+        user = get_user_model().objects.get(username=username)
+
+        return Profile.objects.get(user=user)
+    
+    def get_success_url(self) -> str:
+        return reverse_lazy("account:profile", kwargs={"username": self.get_object().user.username})

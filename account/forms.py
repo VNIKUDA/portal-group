@@ -1,7 +1,11 @@
-from typing import Any
+from typing import Any, Mapping
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import get_user_model
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
+from account.models import Profile
 
 class LoginForm(AuthenticationForm):
     def __init__(self, request: Any = ..., *args: Any, **kwargs: Any) -> None:
