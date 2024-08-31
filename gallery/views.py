@@ -3,6 +3,7 @@ from gallery.models import Image
 
 class GalleryHomeView(ArchiveIndexView):
     model = Image
+    allow_empty = True
     date_field = "uploaded_at"
     context_object_name = "images"
     template_name = "gallery/home.html"

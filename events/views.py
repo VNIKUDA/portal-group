@@ -1,8 +1,11 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ArchiveIndexView, DetailView
 from events.models import Event
 
-class EventHomeView(ListView):
+class EventHomeView(ArchiveIndexView):
     model = Event
+    allow_empty = True
+    allow_future = True
+    date_field = "date"
     context_object_name = "events"
     template_name = "events/home.html"
 
