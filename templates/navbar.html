@@ -32,7 +32,7 @@
             <ul class="list-group list-group-flush">
                 {% now "Y" as current_year %}
                 {% now "m" as current_month %}
-                <a href="#" class="list-group-item list-group-item-action fw-medium">Форум</a>
+                <a href="{% url 'forum:home' %}" class="list-group-item list-group-item-action fw-medium">Форум</a>
                 <a href="{% url 'diary:student-diary' request.user current_year current_month %}" class="list-group-item list-group-item-action fw-medium">Електроний щоденник</a>
                 <a href="{% url 'events:home' %}" class="list-group-item list-group-item-action fw-medium">Події</a>
                 <a href="{% url 'surveys:home' %}" class="list-group-item list-group-item-action fw-medium">Опитування</a>

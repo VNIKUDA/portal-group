@@ -8,6 +8,9 @@ class Thread(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ["-created_at"]
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name='posts')
