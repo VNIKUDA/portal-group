@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать/Редактировать проект</title>
+    <style>
+        /* Вставьте стили здесь */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Создать/Редактировать проект</h1>
+    </header>
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Сохранить</button>
+        </form>
+        <a href="{% url 'portfolio_list' %}">Назад</a>
+    </div>
+</body>
+</html>

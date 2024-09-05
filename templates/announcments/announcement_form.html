@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ form.instance.pk|yesno:"Редактирование,Создание" }} объявления</title>
+</head>
+<body>
+    <h1>{{ form.instance.pk|yesno:"Редактирование,Создание" }} объявления</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{% url 'announcement_list' %}">Назад</a>
+</body>
+</html>

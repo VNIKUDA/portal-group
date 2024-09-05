@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Announcments
 
-# Register your models here.
+@admin.register(Announcments)
+class AnnouncmentsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description')

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио</title>
+    <style>
+        /* Вставьте стили здесь */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мое Портфолио</h1>
+        <a href="{% url 'portfolio_create' %}">Добавить проект</a>
+    </header>
+    <div>
+        {% for item in items %}
+        <div>
+            <h2>{{ item.title }}</h2>
+            {% if item.screenshot %}
+                <img src="{{ item.screenshot.url }}" alt="{{ item.title }}" style="max-width: 100px;">
+            {% endif %}
+            <p>{{ item.description }}</p>
+            {% if item.link %}
+                <p><a href="{{ item.link }}" target="_blank">Ссылка на проект</a></p>
+            {% endif %}
+            {% if item.file %}
+                <p><a href="{{ item.file.url }}" target="_blank">Скачать файл</a></p>
+            {% endif %}
+            <p><small>Создано: {{ item.created_at }}</small></p>
+            <a href="{% url 'portfolio_edit' item.pk %}">Редактировать</a>
+            <form action="{% url 'portfolio_delete' item.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+        {% empty %}
+        <p>Нет доступных элементов портфолио.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

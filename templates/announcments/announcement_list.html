@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список объявлений</title>
+</head>
+<body>
+    <h1>Список объявлений</h1>
+    <a href="{% url 'announcement_create' %}">Создать новое объявление</a>
+    <ul>
+        {% for announcement in announcements %}
+            <li>
+                <h2>{{ announcement.title }}</h2>
+                <p>Дата: {{ announcement.date }}</p>
+                <p>{{ announcement.content }}</p>
+                <a href="{% url 'announcement_edit' announcement.pk %}">Редактировать</a>
+                <a href="{% url 'announcement_delete' announcement.pk %}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
