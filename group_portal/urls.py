@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from portfolio import views
-from announcments import views
+from portfolio import views as portfolio
+from announcments import views as announcments
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,8 +30,8 @@ urlpatterns = [
     path('events/', include("events.urls")),
     path('surveys/', include("surveys.urls")),
     path('votes/', include("votes.urls")),
-    path('announcments/', views.portfolio, name='announcments'),
+    path('announcments/', announcments.portfolio, name='announcments'),
     path('materials/', include("materials.urls")),
-    path('portfolio/', views.portfolio_list, name='portfolio_list'),
+    path('portfolio/', portfolio.portfolio_list, name='portfolio_list'),
     path('gallery/', include("gallery.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ from .forms import PortfolioItemForm
 @login_required
 def portfolio_list(request):
     items = PortfolioItem.objects.filter(user=request.user)
-    return render(request, 'portfolio.html', {'items': items})
+    return render(request, 'portfolio/portfolio.html', {'items': items})
 
 @login_required
 def portfolio_create(request):
