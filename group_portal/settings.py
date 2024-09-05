@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'events',
     'surveys',
     'votes',
-    'announcments',
+    'announcements',
     'materials',
     'portfolio',
     'gallery',
