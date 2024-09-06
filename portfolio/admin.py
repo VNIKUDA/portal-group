@@ -1,3 +1,7 @@
 from django.contrib import admin
+from portfolio.models import PortfolioItem
 
-# Register your models here.
+@admin.register(PortfolioItem)
+class PortfolioItemAdmin(admin.ModelAdmin):
+    list_display = ('title', 'user', 'created_at')
+    search_fields = ('title', 'description')

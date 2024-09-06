@@ -30,5 +30,3 @@ class SurveyAdmin(NestedModelAdmin):
 
 # Register your models here.
 admin.site.register(Survey, SurveyAdmin)
-admin.site.register(Question)
-admin.site.register(Option)

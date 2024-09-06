@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'events',
     'surveys',
     'votes',
-    'announcments',
+    'announcements',
     'materials',
     'portfolio',
     'gallery',
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "django.contrib.auth.middleware.LoginRequiredMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -114,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = reverse_lazy("account:login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
+LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
 
 # Internationalization
