@@ -21,7 +21,15 @@
                     </div>
                 </div>
             </div>
-            <a href="{% url 'account:profile-edit' profile.user.username %}" class="btn btn-primary w-100 mt-2">Редагувати</a>
+            {% if request.user == profile.user %}
+            <div class="d-grid gap-3">
+                <a href="{% url 'account:profile-edit' profile.user.username %}" class="btn btn-primary mt-2">Редагувати</a>
+                <form action="{% url 'account:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger w-100">Вийти</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
         <div class="card w-75" style="height: fit-content;">
             <div class="card-header">

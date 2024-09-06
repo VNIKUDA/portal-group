@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView
 from account.forms import LoginForm,  SignUpForm
 from account.models import Profile
+from account.mixins import UserIsOwner
 
 User = get_user_model()
 
@@ -44,7 +45,7 @@ class ProfileView(DetailView):
         return Profile.objects.get(user=user)
 
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(UserIsOwner, UpdateView):
     model = Profile
     fields = ["avatar", "bio"]
     context_object_name = "profile"
