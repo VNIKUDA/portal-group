@@ -19,7 +19,7 @@ class ThreadSearchView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        search_query = self.kwargs.get("query")
+        search_query = self.request.GET.get("query")
 
         matched_query = queryset.filter(title__contains=search_query)
 
