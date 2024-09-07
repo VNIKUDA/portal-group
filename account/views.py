@@ -22,7 +22,7 @@ class LoginView(auth_views.LoginView):
 class SignUpView(CreateView):
     model = User
     form_class = SignUpForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('account:login')
     template_name = 'account/signup.html'
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
